@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <>
       {!isLoading ? (
-        <div className="min-h-screen text-white flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen flex flex-col items-center justify-center p-6">
           <h1 className="text-5xl font-extrabold mb-4 text-center">
             Welcome to <span className="title_colored">NutriApp</span>
           </h1>

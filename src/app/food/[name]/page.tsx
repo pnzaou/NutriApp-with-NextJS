@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { IFood, IMacronutrientData } from "@/types";
 import { useRouter } from "next/navigation";
 import { Undo2 } from "lucide-react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useThemeStore } from "@/store/useThemeStore";
 
 
 const FoodPage = ({ params }: { params: { name: string } }) => {
@@ -13,6 +14,7 @@ const FoodPage = ({ params }: { params: { name: string } }) => {
     const [food, setFood] = useState<IFood | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [macronutriments, setMacronutriments] = useState<IMacronutrientData[]>([])
+    const { theme } = useThemeStore()
 
     const COLORS = ['#F28907', '#5079f2', '#F2220F'];
 
@@ -45,9 +47,9 @@ const FoodPage = ({ params }: { params: { name: string } }) => {
     return (
         <>
             {(!isLoading && food && macronutriments) ? (
-                 <div className="p-8 text-white">
-                    <Undo2 className="cursor-pointer mb-5 text-white" onClick={() => router.back()}/>
-                     <h1 className="mb-6 text-5xl font-bold leading-tight tracking tight text-white md:text-6xl lg:text-7xl">
+                 <div className="p-8">
+                    <Undo2 className="cursor-pointer mb-5" onClick={() => router.back()}/>
+                     <h1 className="mb-6 text-5xl font-bold leading-tight tracking tight md:text-6xl lg:text-7xl">
                         {food.name}
                      </h1>   
                      <div className="flex flex-col md:flex-row items-center md:items-start">
@@ -80,7 +82,7 @@ const FoodPage = ({ params }: { params: { name: string } }) => {
                             <div className="text-lg font-semibold mb-4">
                                 Apport nutritionnel pour 100 g:
                             </div>
-                            <div className="mb-4 p-4 text-white bg-gray-800 rounded lg shadow-inner">
+                            <div className={`mb-4 p-4 text-white rounded lg shadow-inner ${theme === "dark" ? "bg-gray-800" : "bg-gray-400"}`}>
                                 <div className="mb-3">Calories: <span className="font-medium">{food?.calories} cal</span></div>
                                 <div className="flex items-center mb-2">
                                     <div className="w-5 h-5 bg-[#F28907] border border-gray-700 mr-3"></div>
@@ -115,7 +117,7 @@ const FoodPage = ({ params }: { params: { name: string } }) => {
                     </div>
                 </div>
             ): (
-                <div className="flex justify-center items-center h-screen text-white">
+                <div className="flex justify-center items-center h-screen">
                     <p className="text-2xl">Loading...</p>
                 </div>
             )}
